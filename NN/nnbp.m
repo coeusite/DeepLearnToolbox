@@ -11,9 +11,6 @@ function nn = nnbp(nn)
             d{n} = - nn.e;
     end
     
-    % Masking
-    nn.W{1} = nn.W{1} .* nn.mask;
-    
     for i = (n - 1) : -1 : 2
         % Derivative of the activation function
         switch nn.activation_function 
@@ -44,6 +41,8 @@ function nn = nnbp(nn)
     for i = 1 : (n - 1)
         if i+1==n
             nn.dW{i} = (d{i + 1}' * nn.a{i}) / size(d{i + 1}, 1);
+        elseif i==1
+            nn.dW{i} = (d{i + 1}(:,2:end)' * nn.a{i}) / size(d{i + 1}, 1) .* nn.mask;      % masking...
         else
             nn.dW{i} = (d{i + 1}(:,2:end)' * nn.a{i}) / size(d{i + 1}, 1);      
         end
