@@ -8,15 +8,13 @@ function nn = nnff(nn, x, y)
     
     x = [ones(m,1) x];
     nn.a{1} = x;
-
+    
+    % Masking
+    nn.W{1} = nn.W{1} .* nn.mask;
+    
     %feedforward pass
     for i = 2 : n-1
     
-        % Masking
-        if(i==2)
-            nn.W{1} = nn.W{1} .* nn.mask;
-        end
-        
         switch nn.activation_function 
             case 'sigm'
                 % Calculate the unit's outputs (including the bias term)
