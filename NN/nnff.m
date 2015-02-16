@@ -11,6 +11,12 @@ function nn = nnff(nn, x, y)
 
     %feedforward pass
     for i = 2 : n-1
+    
+        % Masking
+        if(i==2)
+            nn.W{1} = nn.W{1} .* nn.mask;
+        end
+        
         switch nn.activation_function 
             case 'sigm'
                 % Calculate the unit's outputs (including the bias term)
@@ -19,10 +25,6 @@ function nn = nnff(nn, x, y)
                 nn.a{i} = tanh_opt(nn.a{i - 1} * nn.W{i - 1}');
         end
         
-        % Masking
-        if(i==2)
-            nn.a{i} = nn.a{i}.* nn.mask;
-        end
         
         %dropout
         if(nn.dropoutFraction > 0)
