@@ -20,8 +20,8 @@ function nn = nnapplygrads(nn)
                     
         if i==1
             % Masking
-            disp(dW == dW .* nn.mask);
             dW = dW .* nn.mask;
+            nn.vW{i} = nn.vW{i} .* nn.mask;
         end
         
         nn.W{i} = nn.W{i} - dW;
