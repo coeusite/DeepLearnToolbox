@@ -11,12 +11,19 @@ function nn = nnapplygrads(nn)
         end
         
         dW = nn.learningRate * dW;
+
         
         if(nn.momentum>0)
             nn.vW{i} = nn.momentum*nn.vW{i} + dW;
             dW = nn.vW{i};
         end
-            
+                    
+        if i==1
+            % Masking
+            disp(dW == dW .* nn.mask);
+            dW = dW .* nn.mask;
+        end
+        
         nn.W{i} = nn.W{i} - dW;
     end
 end
