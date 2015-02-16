@@ -27,6 +27,8 @@ function nn = nnbp(nn)
         % Backpropagate first derivatives
         if i+1==n % in this case in d{n} there is not the bias term to be removed             
             d{i} = (d{i + 1} * nn.W{i} + sparsityError) .* d_act; % Bishop (5.56)
+        elseif i==1 % masking + in this case in d{i} the bias term has to be removed
+            d{i} = (d{i + 1}(:,2:end) * (nn.W{i} .* nn.mask) + sparsityError) .* d_act;
         else % in this case in d{i} the bias term has to be removed
             d{i} = (d{i + 1}(:,2:end) * nn.W{i} + sparsityError) .* d_act;
         end
