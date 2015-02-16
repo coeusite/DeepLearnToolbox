@@ -19,6 +19,11 @@ function nn = nnff(nn, x, y)
                 nn.a{i} = tanh_opt(nn.a{i - 1} * nn.W{i - 1}');
         end
         
+        % Masking
+        if(i==2)
+            nn.a{i} = nn.a{i}.* nn.mask;
+        end
+        
         %dropout
         if(nn.dropoutFraction > 0)
             if(nn.testing)
