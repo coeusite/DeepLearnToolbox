@@ -26,4 +26,8 @@ function nn = nnsetup(architecture)
         % average activations (for use with sparsity)
         nn.p{i}     = zeros(1, nn.size(i));   
     end
+    
+    % mask
+    nn.mask = ones(nn.size(2), nn.size(1)+1);
+    
 end
