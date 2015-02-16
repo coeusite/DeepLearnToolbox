@@ -2,6 +2,9 @@ function nn = nnapplygrads(nn)
 %NNAPPLYGRADS updates weights and biases with calculated gradients
 % nn = nnapplygrads(nn) returns an neural network structure with updated
 % weights and biases
+
+    % Masking
+    nn.W{1} = nn.W{1} .* nn.mask;
     
     for i = 1 : (nn.n - 1)
         if(nn.weightPenaltyL2>0)
@@ -11,17 +14,10 @@ function nn = nnapplygrads(nn)
         end
         
         dW = nn.learningRate * dW;
-
         
         if(nn.momentum>0)
             nn.vW{i} = nn.momentum*nn.vW{i} + dW;
             dW = nn.vW{i};
-        end
-                    
-        if i==1
-            % Masking
-            dW = dW .* nn.mask;
-            nn.vW{i} = nn.vW{i} .* nn.mask;
         end
         
         nn.W{i} = nn.W{i} - dW;
