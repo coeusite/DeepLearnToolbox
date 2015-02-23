@@ -60,6 +60,13 @@ Known errors
 `test_cnn_gradients_are_numerically_correct` fails on Octave because of a bug in Octave's convn implementation. See http://savannah.gnu.org/bugs/?39314
 
 `test_example_CNN` fails in Octave for the same reason.
+
+
+Modification
+---------------------
+This fork is modified for a customized model by adding "binary mask".
+
+
 Example: Deep Belief Network
 ---------------------
 ```matlab
